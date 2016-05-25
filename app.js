@@ -46,8 +46,11 @@ function getCurrentTime() {
 		ampm = "pm";
 	}
 	var minutes = date.getMinutes();
-	//console.log(hours + ":" + minutes + " " + ampm);
-	return "6:00 am";
+	minutes = minutes.toString();
+	if(minutes.length == 1)
+		minutes = "0" + minutes;
+	console.log("The Current time is " + hours + ":" + minutes + " " + ampm);
+	return hours + ":" + minutes + " " + ampm;
 }
 
 function playFile(fileName) {
@@ -76,7 +79,8 @@ process.stdin.on("keypress", function(ch, key) {
 	if(key && key.name == "c" && key.ctrl)
 		process.exit();
 
-	audioStream.end();
+	if(isPlaying)
+		audioStream.end();
 });
 
 process.stdin.setRawMode(true);
